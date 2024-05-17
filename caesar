@@ -1,0 +1,21 @@
+#!/bin/bash
+
+tool="caesar"
+
+# NOW THE TOOL WILL WORK ONLY ON KALI..
+opt_folder="/opt"
+sbin_folder="/sbin"
+opt="${opt_folder}/${tool}"
+sbin="${sbin_folder}/${tool}"
+
+
+#            IF YOU WANT TO RUN ON TERMUX REPLACING THESE.. 
+#     ***BUT MOST TOOLS INSTALLED ARE SUPPORTED ON KALI ONLY***
+# +---------------------+---------------------------------------------------------------+
+# |   KALI LINUX        |     TERMUX                                                    |
+# +---------------------+---------------------------------------------------------------+
+# |   /opt/caesar        |  /data/data/com.termux/files/usr/share/caesar                  |
+# |   /sbin/caesar       |  /data/data/com.termux/files/usr/bin/caesar                    |
+# +---------------------+---------------------------------------------------------------+
+
+"${opt}/caesar_executable" $@
