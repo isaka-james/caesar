@@ -7,7 +7,7 @@ A simple command-line tool for decrypting Caesar cipher-encrypted text. This too
 To install the tool on Kali Linux, use the provided `install.sh` script. Run the following command in your terminal:
 
 ```bash
-sudo bash install.sh
+bash install.sh
 ```
 
 ## Usage
@@ -24,6 +24,8 @@ You can specify the encrypted text and the target variable directly in the comma
 Key found: -19
 Decrypted text: picoCTF{caesar_d3cr9pt3d_b204adc6}
 ```
+
+> You can use that when you only know that before encryption, the plain text contained `CTF` in it, you can use that to many various words out there :)
 
 ### Example with Interactive Prompts
 
@@ -46,11 +48,21 @@ Decrypted text: picoCTF{caesar_d3cr9pt3d_b204adc6}
 - `caesar` is the command to run the decryption tool.
 - `-d` flag is used to specify the encrypted text.
 - `-w` flag is used to specify the target variable to search for in the decrypted text.
+- `-h` or `--help` flag is used to show help and how to use the tool.
 
 ## Installation Script (`install.sh`)
 
-Ensure your `install.sh` script builds and installs the Rust project correctly. The script should compile the Rust project and copy the resulting binary to a directory in your PATH, such as `/usr/local/bin`.
+Ensure your `install.sh` script builds and installs the Rust project correctly. The script should compile the Rust project and copy the resulting binary to a directory in your PATH, such as `~/.local/share"` (for `debian` based users).
+
+> For uninstallation you just stype 
+
+```bash
+┌──(isaka㉿kali)-[~/temp/ctf]
+└─$ caesar uninstall
+```
 
 ## Summary
 
 This tool is designed to help you decrypt Caesar cipher text efficiently, either by specifying the necessary parameters directly in the command line or through interactive prompts. It's particularly useful for CTF challenges and learning more about classical encryption techniques.
+
+- If you would like to see its source codes, you can see it [in this commit](https://github.com/isaka-james/caesar/commit/bc8b34ec52aa8034856eb8b0ebd20979082689e9)
