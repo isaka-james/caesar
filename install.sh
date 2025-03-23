@@ -6,10 +6,12 @@ if grep -qi "debian" /etc/os-release 2>/dev/null || grep -qi "kali" /etc/os-rele
     echo "Detected Debian-based system."
     shared_folder="$HOME/.local/share"
     sbin_folder="$HOME/.local/bin"
+    executable="caesar_executable"
 elif [ -d "/data/data/com.termux/files/usr" ]; then
     echo "Detected Termux."
     shared_folder="/data/data/com.termux/files/usr/share"
     sbin_folder="/data/data/com.termux/files/usr/bin"
+    executable="termux_executable"
 else
     echo "Unsupported system. This script only supports Debian-based systems and Termux."
     exit 1
@@ -36,13 +38,13 @@ if [ -e "$sbin" ]; then
 fi 
 
 
-chmod +x caesar_executable caesar
+chmod +x $executable caesar
 
 mkdir -p "$shared"
 echo -e "\t  $tool: '${shared}' folder was made .."
 
 echo -e "\t  $tool: copying files to ${shared} .."
-cp -r author.sh README.MD caesar_executable LICENSE  $shared
+cp -r author.sh README.MD $executable LICENSE  $shared
 echo -e "\t  $tool: files and folders were copied to ${shared_folder}/${tool} .."
 
 cp -r caesar $sbin_folder

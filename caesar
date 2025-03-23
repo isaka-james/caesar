@@ -5,9 +5,11 @@ tool="caesar"
 if grep -qi "debian" /etc/os-release 2>/dev/null || grep -qi "kali" /etc/os-release 2>/dev/null; then
     shared_folder="$HOME/.local/share"
     sbin_folder="$HOME/.local/bin"
+    executable="caesar_executable"
 elif [ -d "/data/data/com.termux/files/usr" ]; then
     shared_folder="/data/data/com.termux/files/usr/share"
     sbin_folder="/data/data/com.termux/files/usr/bin"
+    executable="termux_executable"
 else
     echo "Unsupported system. This script only supports Debian-based systems and Termux."
     exit 1
@@ -31,4 +33,4 @@ elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     exit 0
 fi
 
-"${shared}/caesar_executable" $@
+"${shared}/${executable}" $@
