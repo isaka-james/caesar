@@ -1,0 +1,16 @@
+# Changelog  
+All notable changes to this project will be documented in this file.  
+
+## [Released] / [1.1.0] - 2025-03-24
+### Added  
+- Platform detection logic for Debian-based systems and Termux.  
+- Dynamic executable naming (`caesar_executable` for Debian, `termux_executable` for Termux).  
+
+### Changed  
+- **BREAKING**: Migrated installation paths from system-wide directories (`/opt`, `/sbin`) to user-local paths (`~/.local/share`, `~/.local/bin`).  
+- Installation script now avoids `sudo` by default for improved security and accessibility.  
+
+### Fixed  
+- Backward compatibility with existing installations during path transitions.  
+- Permission handling for non-root users.  
+

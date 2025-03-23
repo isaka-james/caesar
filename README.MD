@@ -52,9 +52,9 @@ Decrypted text: picoCTF{caesar_d3cr9pt3d_b204adc6}
 
 ## Installation Script (`install.sh`)
 
-Ensure your `install.sh` script builds and installs the Rust project correctly. The script should compile the Rust project and copy the resulting binary to a directory in your PATH, such as `~/.local/share"` (for `debian` based users).
+`install.sh` script handles all the installation logic, by identifying the appropiate way to install the tool according to your enviroment,such as `~/.local/share"` (for `debian` based users).
 
-> For uninstallation you just stype 
+> For uninstallation you just type 
 
 ```bash
 ┌──(isaka㉿kali)-[~/temp/ctf]
@@ -63,6 +63,8 @@ Ensure your `install.sh` script builds and installs the Rust project correctly. 
 
 ## Summary
 
-This tool is designed to help you decrypt Caesar cipher text efficiently, either by specifying the necessary parameters directly in the command line or through interactive prompts. It's particularly useful for CTF challenges and learning more about classical encryption techniques.
+This tool is designed to help you decrypt Caesar cipher text efficiently, either by specifying the necessary parameters directly in the command line or through interactive prompts. It's particularly useful for CTF challenges and learning more about classical encryption techniques. And it is very compactible with all most all linux enviroments including Termux.
 
 - If you would like to see its source codes, you can see it [in this commit](https://github.com/isaka-james/caesar/commit/bc8b34ec52aa8034856eb8b0ebd20979082689e9)
+
+<img src="https://komarev.com/ghpvc/?username=caesar-tool&label=Visitors&color=0e75b6&style=flat" alt="since 24 March,2025" />
