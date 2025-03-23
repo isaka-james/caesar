@@ -2,73 +2,51 @@
 
 tool="caesar"
 
-# ON KALI WE NEED ROOT ACCESS TO /sbin
-if [ "$(id -u)" -ne 0 ]; then
-    echo -e "You should run as \e[0;101m\e[1;97mroot\e[0m\e[0m!"
-    echo -e "Don't worry, we won't install '${tool}' in root.."
-    exit 1
-fi
-
-
-# Check if rustc is available in common directories
-if [ -f /usr/sbin/rustc ] || [ -f /usr/bin/rustc ] || [ -f /usr/local/bin/rustc ]; then
-    echo "Rust compiler found. [ Dependency ]"
+if grep -qi "debian" /etc/os-release 2>/dev/null || grep -qi "kali" /etc/os-release 2>/dev/null; then
+    echo "Detected Debian-based system."
+    shared_folder="$HOME/.local/share"
+    sbin_folder="$HOME/.local/bin"
+elif [ -d "/data/data/com.termux/files/usr" ]; then
+    echo "Detected Termux."
+    shared_folder="/data/data/com.termux/files/usr/share"
+    sbin_folder="/data/data/com.termux/files/usr/bin"
 else
-    echo "Rust compiler (rustc) is not available in /usr/sbin, /usr/bin, or /usr/local/bin."
-    echo "This tool depends on Rust. Please install Rust to proceed."
+    echo "Unsupported system. This script only supports Debian-based systems and Termux."
     exit 1
 fi
 
 
-
-
-
-# NOW THE TOOL WILL WORK ONLY ON LINUX
-opt_folder="/opt"
-sbin_folder="/sbin"
-opt="${opt_folder}/${tool}"
+shared="${shared_folder}/${tool}"
 sbin="${sbin_folder}/${tool}"
-
-
-#            IF YOU WANT TO RUN ON KALI REPLACING THESE.. 
-#     ***BUT MOST TOOLS INSTALLED ARE SUPPORTED ON TERMUX ONLY***
-# +---------------------+---------------------------------------------------------------+
-# |   KALI LINUX        |     TERMUX                                                    |
-# +---------------------+---------------------------------------------------------------+
-# |   /opt/${tool}        |  /data/data/com.termux/files/usr/share/${tool}              |
-# |   /sbin/${tool}       |  /data/data/com.termux/files/usr/bin/${tool}                |
-# +---------------------+---------------------------------------------------------------+
 
 echo -e "\n\tStarting Installation of [$tool]..\n"
 
 
 # Check if the tool was installed before and delete the previous version
-if [ -d "$opt" ]; then
-    echo -e "\t  $tool: \"${opt}\" directory was found .."
-    sudo rm -rf "${opt}"
-    echo -e "\t  $tool: \"${opt}\" was removed .."
+if [ -d "$shared" ]; then
+    echo -e "\t  $tool: \"${shared}\" directory was found .."
+    rm -rf "${shared}"
+    echo -e "\t  $tool: \"${shared}\" was removed .."
 fi 
 
 if [ -e "$sbin" ]; then
     echo -e "\t  $tool: \"${sbin}\" file was found .."
-    sudo rm -rf "${sbin}"
+    rm -rf "${sbin}"
     echo -e "\t  $tool: \"${sbin} was removed .."
 fi 
 
 
+chmod +x caesar_executable caesar
 
-sudo mkdir $opt
-echo -e "\t  $tool: '${opt}' folder was made .."
+mkdir -p "$shared"
+echo -e "\t  $tool: '${shared}' folder was made .."
 
-echo -e "\t  $tool: copying files to ${opt} .."
-sudo cp -r author.sh install.sh README.MD caesar caesar_executable  $opt
-echo -e "\t  $tool: files and folders were moved to ${opt_folder}/${tool} .."
+echo -e "\t  $tool: copying files to ${shared} .."
+cp -r author.sh README.MD caesar_executable LICENSE  $shared
+echo -e "\t  $tool: files and folders were copied to ${shared_folder}/${tool} .."
 
-sudo cp -r caesar $sbin_folder
-echo -e "\t  $tool: '${tool}' was moved to ${sbin_folder}.."
-
-sudo chmod 777  "$opt"  "$sbin" "${opt}/caesar_executable"
-# 777- kali Linux problem (advantage for future use, [777 must be accessible for all users])
+cp -r caesar $sbin_folder
+echo -e "\t  $tool: '${tool}' was copied to ${sbin_folder}.."
 
 echo -e "\t  $tool: Hoooorey, Installation complete!! .."
 

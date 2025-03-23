@@ -2,20 +2,33 @@
 
 tool="caesar"
 
-# NOW THE TOOL WILL WORK ONLY ON KALI..
-opt_folder="/opt"
-sbin_folder="/sbin"
-opt="${opt_folder}/${tool}"
+if grep -qi "debian" /etc/os-release 2>/dev/null || grep -qi "kali" /etc/os-release 2>/dev/null; then
+    shared_folder="$HOME/.local/share"
+    sbin_folder="$HOME/.local/bin"
+elif [ -d "/data/data/com.termux/files/usr" ]; then
+    shared_folder="/data/data/com.termux/files/usr/share"
+    sbin_folder="/data/data/com.termux/files/usr/bin"
+else
+    echo "Unsupported system. This script only supports Debian-based systems and Termux."
+    exit 1
+fi
+
+
+shared="${shared_folder}/${tool}"
 sbin="${sbin_folder}/${tool}"
 
+# Prebuilt commands
+if [ "$1" == "uninstall" ]; then
+    echo "Uninstalling ${tool}..."
+    rm -rf "${shared}" "${sbin}"
+    echo "${tool} has been uninstalled successfully."
+    exit 0
+elif [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    echo "Usage: ${tool} [options] [arguments]"
+    echo "Options:"
+    echo "  -h, --help      Show this help message and exit"
+    echo "  uninstall        Uninstall ${tool}"
+    exit 0
+fi
 
-#            IF YOU WANT TO RUN ON TERMUX REPLACING THESE.. 
-#     ***BUT MOST TOOLS INSTALLED ARE SUPPORTED ON KALI ONLY***
-# +---------------------+---------------------------------------------------------------+
-# |   KALI LINUX        |     TERMUX                                                    |
-# +---------------------+---------------------------------------------------------------+
-# |   /opt/caesar        |  /data/data/com.termux/files/usr/share/caesar                  |
-# |   /sbin/caesar       |  /data/data/com.termux/files/usr/bin/caesar                    |
-# +---------------------+---------------------------------------------------------------+
-
-"${opt}/caesar_executable" $@
+"${shared}/caesar_executable" $@
